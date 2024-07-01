@@ -1,124 +1,298 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_polygon_clipper/flutter_polygon_clipper.dart';
 
-void main() {
-  runApp(PecelApp());
-}
+void main() => runApp(MyApp());
 
-class PecelApp extends StatelessWidget {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: PecelHomePage(),
+      debugShowCheckedModeBanner: true,
+      title: 'Ujian Akhir Semester PAPB (Semester 6)',
+      home: MyHomePage(),
     );
   }
 }
 
-class PecelHomePage extends StatelessWidget {
+// IMAGES
+var pecelHeader = 'https://i.ibb.co.com/s1RpfXD/pecel.jpg';
+var pecelMenu = 'https://i.ibb.co.com/Smfw2R0/pecel2.jpg';
+// COLORS
+var textYellow = Color(0xFFf6c24d);
+var iconYellow = Color(0xFFf4bf47);
+
+class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Pecel App'),
+      floatingActionButton: MyActionButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: MyAppbar(),
+      body: Container(
+        child: ListView(
+          children: <Widget>[
+            SizedBox(height: 16.0),
+            FoodListview(),
+            SizedBox(height: 16.0),
+            SelectTypeSection(),
+            SizedBox(height: 16.0),
+            MenuItemsList()
+          ],
+        ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+    );
+  }
+}
+
+class MyAppbar extends StatelessWidget {
+  const MyAppbar({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomAppBar(
+      child: Container(
+        height: 60.0,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  Icon(Icons.home),
+                  Text('Home', style: TextStyle(fontSize: 12.0))
+                ],
+              ),
+              Container(
+                width: 100.0,
+              ),
+              Column(
+                children: <Widget>[
+                  Icon(
+                    Icons.shopping_cart,
+                    color: Colors.black45,
+                  ),
+                  Text('Keranjang', style: TextStyle(fontSize: 12.0))
+                ],
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Keranjang',
+        ),
+      ),
+    );
+  }
+}
+
+class MyActionButton extends StatelessWidget {
+  const MyActionButton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 100.0,
+      width: 100.0,
+      child: FlutterClipPolygon(
+        sides: 6,
+        child: Container(
+          color: iconYellow,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Icon(FontAwesomeIcons.book),
+              SizedBox(
+                height: 4.0,
+              ),
+              Text(
+                'Menu',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
+              )
+            ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+//Bagian 2
+class MenuItemsList extends StatelessWidget {
+  const MenuItemsList({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            'Menu Pilihan',
+            style: TextStyle(fontSize: 22.0, color: Colors.black54),
+          ),
+          SizedBox(height: 16.0),
+          MenuItem(),
+          MenuItem(),
         ],
       ),
-      body: SingleChildScrollView(
-  child: Column(
-    children: [
-      Row(
-        children: [
-          Expanded(
+    );
+  }
+}
+
+class MenuItem extends StatelessWidget {
+  const MenuItem({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            height: 100.0,
+            width: 100.0,
             child: Image.network(
-              'https://i.ibb.co.com/s1RpfXD/pecel.jpg',
-              width: 150, // Lebar gambar dalam piksel
-              height: 400, // Tinggi gambar dalam piksel
-              fit: BoxFit.cover, // Opsi penyesuaian gambar
-            ), 
-          ),
-          Expanded(
-            child: Image.network(
-              'https://i.ibb.co.com/Smfw2R0/pecel2.jpg',
-              width: 100,
-              height: 400,
+              pecelMenu,
               fit: BoxFit.cover,
             ),
           ),
-        ],
-      ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(0), // Bentuk menjadi persegi dengan radius sudut 10
-        ),
-                    fixedSize: Size(711, 200),
-                  ),
-                  onPressed: () {},
-                  child: Text('Menu Spesial'),
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(0), // Bentuk menjadi persegi dengan radius sudut 10
-        ),
-                    fixedSize: Size(411, 200),
-                  ),
-                  onPressed: () {},
-                  child: Text('Menu Terlaris'),
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(0), // Bentuk menjadi persegi dengan radius sudut 10
-        ),
-                    fixedSize: Size(411, 200),
-                  ),
-                  onPressed: () {},
-                  child: Text('Minuman'),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+          SizedBox(
+            width: 16.0,
+          ),
+          Container(
+            child: Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Menu Pilihan',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                        color: iconYellow,
+                        borderRadius: BorderRadius.circular(4.0)),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8.0, vertical: 4.0),
+                      child: Row(
+                        children: <Widget>[
+                          Icon(
+                            Icons.star,
+                            size: 15.0,
+                          ),
+                          Text('4.5')
+                        ],
+                      ),
                     ),
                   ),
-                  MenuItem(
-                    imageUrl: 'https://i.ibb.co.com/s1RpfXD/pecel.jpg',
-                    title: 'Pecel Sambel Tumpang',
-                    description:
-                        'Pecel, Sambel Tumpang, Telur Bali, Sate Usus...',
-                    rating: 4.5,
+                  SizedBox(
+                    height: 8.0,
                   ),
-                  MenuItem(
-                    imageUrl: 'https://i.ibb.co.com/Smfw2R0/pecel2.jpg',
-                    title: 'Pecel Sambel Tumpang',
-                    description:
-                        'Pecel, Sambel Tumpang, Telur Bali, Sate Usus...',
-                    rating: 4.5,
+                  Text(
+                    'Pecel Sambel Tumpang',
+                    style: TextStyle(fontWeight: FontWeight.w600),
                   ),
+                  Container(
+                      width: 200.0,
+                      child: Text(
+                        'Pecel, Sambel Tumpang, Telur Bali, Sate Usus, ...',
+                        style: TextStyle(color: Colors.grey),
+                      )),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class SelectTypeSection extends StatelessWidget {
+  const SelectTypeSection({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: SingleChildScrollView(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                height: 92.0,
+                width: 120.0,
+                color: Colors.lightGreen[700],
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                      FontAwesomeIcons.bowlRice,
+                      color: Colors.green[300],
+                    ),
+                    SizedBox(
+                      height: 4.0,
+                    ),
+                    Text(
+                      'Menu Special',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.w500),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              height: 92.0,
+              width: 120.0,
+              color: Colors.red[600],
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(
+                    FontAwesomeIcons.utensils,
+                    color: Colors.red[400],
+                  ),
+                  SizedBox(
+                    height: 4.0,
+                  ),
+                  Text(
+                    'Menu Terlaris',
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.w500),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              height: 92.0,
+              width: 124.0,
+              color: Colors.blue[700],
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(
+                    FontAwesomeIcons.mugHot,
+                    color: Colors.blue[200],
+                  ),
+                  SizedBox(
+                    height: 4.0,
+                  ),
+                  Text(
+                    'Minuman',
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.w500),
+                  )
                 ],
               ),
             ),
@@ -129,47 +303,84 @@ class PecelHomePage extends StatelessWidget {
   }
 }
 
-class MenuItem extends StatelessWidget {
-  final String imageUrl;
-  final String title;
-  final String description;
-  final double rating;
-
-  MenuItem({
-    required this.imageUrl,
-    required this.title,
-    required this.description,
-    required this.rating,
-  });
+//Bagian 3
+class FoodListview extends StatelessWidget {
+  const FoodListview({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        leading: Image.network(imageUrl),
-        title: Text(title),
-        subtitle: Text(description),
-        trailing: Container(
+    return Padding(
+      padding: const EdgeInsets.only(left: 8.0),
+      child: Container(
+        height: 160.0,
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          children: <Widget>[
+            ItemCard(),
+            ItemCard(),
+            ItemCard(),
+            ItemCard(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ItemCard extends StatelessWidget {
+  const ItemCard({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 8.0),
+      child: Container(
+          height: 160.0,
+          width: 300.0,
           decoration: BoxDecoration(
-            color: Colors.yellow,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          padding: EdgeInsets.all(5),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(Icons.star, color: Colors.white, size: 20),
-              SizedBox(width: 5),
-              Text(
-                rating.toString(),
-                style: TextStyle(
-                  color: Colors.white,
+              image: DecorationImage(
+                  image: NetworkImage(pecelHeader), fit: BoxFit.cover)),
+          child: Stack(
+            children: <Widget>[
+              Container(
+                height: 160.0,
+                width: 300.0,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        colors: [Colors.black.withOpacity(0.1), Colors.black],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter)),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Spacer(),
+                    Text(
+                      'Promo 20%',
+                      style: TextStyle(
+                          color: textYellow,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24.0,
+                          letterSpacing: 1.1),
+                    ),
+                    Text(
+                      'Untuk 10 Pembeli Pertama',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.0,
+                          letterSpacing: 1.1),
+                    ),
+                  ],
                 ),
               ),
             ],
-          ),
-        ),
-      ),
+          )),
     );
   }
 }
